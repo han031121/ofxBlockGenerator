@@ -1,11 +1,18 @@
 #include "generateBlock.h"
 
+std::random_device rd;
+std::mt19937 mt(rd());
+
 bool cmp(std::pair<Tuple,double> a, std::pair<Tuple,double> b) {
     return a.second < b.second;
 }
 
 double blockData::setWeight(int r, int c, int h) {
+    return 1.0;
+}
 
+void blockData::convertBlockData() {
+    
 }
 
 void blockData::generateBlock() {
@@ -78,14 +85,4 @@ void blockData::printData() {
             std::cout << tmp[i][j] << " ";
         std::cout << "\n";
     }
-}
-
-int main() {
-    int i1, i2, i3, i4, i5; //block_count_1, block_count_2, max_r, max_c, max_h
-    std::cin >> i1 >> i2 >> i3 >> i4 >> i5;
-
-    blockData b(i1, i2, i3, i4, i5);
-    b.generateBlock();
-    b.printData();
-    return 0;
 }

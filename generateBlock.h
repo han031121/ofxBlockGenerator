@@ -15,9 +15,6 @@ typedef std::vector<Block> BlockList;
 
 using std::get;
 
-std::random_device rd;
-std::mt19937 mt(rd());
-
 class blockData {
     private:
         std::pair<int,int> block_count_pair; //max : max_r * max_c * max_h
