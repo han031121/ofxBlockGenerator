@@ -7,24 +7,6 @@ bool cmp(std::pair<Tuple,double> a, std::pair<Tuple,double> b) {
     return a.second < b.second;
 }
 
-void blockData::init() {
-    data = {};
-    std::fill(&tempData[0][0][0], &tempData[0][0][0] + MAX_SIZE*MAX_SIZE*MAX_SIZE, 0);
-}
-
-void blockData::convertBlockData() {
-    for(int i = MID - max_r; i <= MID + max_r; i++) {
-        for(int j = MID - max_c; j <= MID + max_c; j++) {
-            for(int k = max_h; k >= 1; k--) {
-                if(tempData[i][j][k]) {
-                    data.push_back({{i,j}, k});
-                    break;
-                }
-            }
-        }
-    }
-}
-
 void blockData::generateBlock() {
     init();
     
@@ -81,10 +63,28 @@ void blockData::generateBlock() {
             created.push_back(cur);
             tempData[get<0>(cur)][get<1>(cur)][get<2>(cur)] = 1;
             cur_count++;
-            std::cout << "selected : " << get<0>(cur) << " " << get<1>(cur) << " " << get<2>(cur) << "\n";
+            //std::cout << "selected : " << get<0>(cur) << " " << get<1>(cur) << " " << get<2>(cur) << "\n";
             break;
         }
     }
 
     convertBlockData();
+}
+
+void blockData::init() {
+    data = {};
+    std::fill(&tempData[0][0][0], &tempData[0][0][0] + MAX_SIZE*MAX_SIZE*MAX_SIZE, 0);
+}
+
+void blockData::convertBlockData() {
+    for(int i = MID - max_r; i <= MID + max_r; i++) {
+        for(int j = MID - max_c; j <= MID + max_c; j++) {
+            for(int k = max_h; k >= 1; k--) {
+                if(tempData[i][j][k]) {
+                    data.push_back({{i,j}, k});
+                    break;
+                }
+            }
+        }
+    }
 }
