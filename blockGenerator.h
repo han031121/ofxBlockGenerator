@@ -8,6 +8,9 @@
 
 #define MAX_SIZE 21
 #define MID 10
+#define DEFAULT_WEIGHT 1.0
+#define DENSITY_CONSTANT 0.02
+#define DUPLICATION_CONSTANT 0.02
 
 typedef std::tuple<int,int,int> Tuple;
 typedef std::pair<std::pair<int,int>, int> Block; //{position, height}
@@ -19,9 +22,12 @@ class blockData {
     private:
         std::pair<int,int> block_count_pair; //max : max_r * max_c * max_h
         int block_count; //current block_count : randomly decided in block_count_pair
-        int max_r; //max : MAX_SIZE / 2
-        int max_c; //max : MAX_SIZE / 2
+        int max_r, max_c; //max : MAX_SIZE / 2
         int max_h; //max : MAX_SIZE - 1
+
+        int biggest_r = 0, biggest_c = 0, biggest_h = 0;
+        int smallest_r = MAX_SIZE, smallest_c = MAX_SIZE;
+        int size_r = 0, size_c = 0, size_h = 0;
         
         bool tempData[MAX_SIZE][MAX_SIZE][MAX_SIZE];
         int created_count[MAX_SIZE][MAX_SIZE][MAX_SIZE];
@@ -32,6 +38,7 @@ class blockData {
 
         void init(); //initialize data
         void convertBlockData(); //create blockData based on tempData
+        void measureSize(Tuple t); //measure current size
 
     public:
         blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h)
@@ -46,6 +53,8 @@ class blockData {
 
         void generateBlock(); //make new Block data
         
-        void printData();
         const BlockList& getData() const { return data; } //get current Block data
+
+        void printData();
+        void printStatus();
 };
