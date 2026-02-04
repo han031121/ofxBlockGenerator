@@ -42,18 +42,19 @@ class blockData {
         double weight_field[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
         
         //data
-        bool temp_data[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
+        bool cubic_data[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
         int height_data[MAX_SIZE][MAX_SIZE] = {0};
         BlockList data = {};
 
         //setting weight
         bool checkCreatable(int r, int c, int h); //check invisibility and max size limit
+        bool checkObscure(int r, int c, int h);
         double getWeight(int r, int c, int h); //get modified weight
         void setWeight(); //calculate weight of specific position
 
         //generating block
         void init(); //initialize data
-        void convertBlockData(); //create blockData and height_data based on temp_data
+        void convertBlockData(); //create blockData and height_data based on cubic_data
         void measureSize(Tuple t); //measure current size
 
     public:

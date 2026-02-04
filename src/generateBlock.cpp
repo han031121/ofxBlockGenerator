@@ -12,7 +12,7 @@ void blockData::generateBlock() {
     std::uniform_int_distribution<int> dis(block_count_pair.first, block_count_pair.second);
     block_count = dis(mt);
 
-    temp_data[0][0][1] = 1;
+    cubic_data[0][0][1] = 1;
     std::vector<Tuple> created;
     
     cur_count++;
@@ -33,7 +33,7 @@ void blockData::generateBlock() {
                 else if(i == 2)
                     next = std::make_tuple(get<0>(cur), get<1>(cur), get<2>(cur) + 1);
 
-                if(temp_data[get<0>(next)][get<1>(next)][get<2>(next)])
+                if(cubic_data[get<0>(next)][get<1>(next)][get<2>(next)])
                     continue;
                 if(selected[get<0>(next)][get<1>(next)][get<2>(next)])
                     continue;
@@ -61,7 +61,8 @@ void blockData::generateBlock() {
                 Tuple cur = p.first;
 
                 created.push_back(cur);
-                temp_data[get<0>(cur)][get<1>(cur)][get<2>(cur)] = 1;
+                cubic_data[get<0>(cur)][get<1>(cur)][get<2>(cur)] = 1;
+                height_data[get<0>(cur)][get<1>(cur)] = std::max(height_data[get<0>(cur)][get<1>(cur)], get<2>(cur));
                 created_count[get<0>(cur)][get<1>(cur)][get<2>(cur)]++;
                 cur_count++;
                 measureSize(cur);
@@ -76,7 +77,7 @@ void blockData::generateBlock() {
 
 void blockData::init() {
     data = {};
-    std::fill(&temp_data[0][0][0], &temp_data[0][0][0] + MAX_SIZE*MAX_SIZE*MAX_SIZE, 0);
+    std::fill(&cubic_data[0][0][0], &cubic_data[0][0][0] + MAX_SIZE*MAX_SIZE*MAX_SIZE, 0);
     std::fill(&height_data[0][0], &height_data[0][0] + MAX_SIZE*MAX_SIZE, 0);
 
     biggest_r = 0;
@@ -93,10 +94,9 @@ void blockData::convertBlockData() {
     for(int i = 0; i < max_r; i++) {
         for(int j = 0; j < max_c; j++) {
             for(int k = max_h; k >= 1; k--) {
-                if(temp_data[i][j][k]) {
+                if(cubic_data[i][j][k]) {
                     Block tmp = {i,j,k};
                     data.push_back(tmp);
-                    height_data[i][j] = k;
                     break;
                 }
             }
