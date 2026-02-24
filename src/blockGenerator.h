@@ -11,14 +11,8 @@
 #define EPSILON 1e-12
 #define DEFAULT_WEIGHT 100.0
 #define DENSITY_COEFF 0.02
-#define DEDUP_COEFF 0.02
 
 typedef std::tuple<int,int,int> Tuple;
-struct Block {
-    int r, c;
-    int height;
-};
-typedef std::vector<Block> BlockList;
 
 using std::get;
 
@@ -30,7 +24,6 @@ class blockData {
         int block_count; //current block_count : randomly decided in block_count_pair
         int max_r, max_c, max_h; //max : MAX_SIZE
         double density_var = 0;
-        double dedup_var = 0;
 
         //status
         int biggest_r = 0, biggest_c = 0, biggest_h = 0;
@@ -38,28 +31,25 @@ class blockData {
         int size_r = 0, size_c = 0, size_h = 0;
         
         //weight
-        int created_count[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
         double weight_field[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
         
         //data
         bool cubic_data[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
         int height_data[MAX_SIZE][MAX_SIZE] = {0};
-        BlockList data = {};
 
         //setting weight
         bool checkCreatable(int r, int c, int h); //check invisibility and max size limit
         bool checkObscure(int r, int c, int h);
         double getWeight(int r, int c, int h); //get modified weight
-        void setWeight(); //calculate weight of specific position
+        void setWeight(); //calculate initial weight
 
         //generating block
         void init(); //initialize data
-        void convertBlockData(); //create blockData and height_data based on cubic_data
         void measureSize(Tuple t); //measure current size
 
     public:
-        blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h, double _den, double _dedup)
-            : max_r(_max_r), max_c(_max_c), max_h(_max_h), density_var(_den), dedup_var(_dedup) {
+        blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h, double _den)
+            : max_r(_max_r), max_c(_max_c), max_h(_max_h), density_var(_den) {
                 block_count_pair = {std::min(_bc1, _bc2), std::max(_bc1, _bc2)};
                 
                 if(std::max(_bc1, _bc2) > max_r * max_c * max_h || std::min(_bc1, _bc2) < 1)
@@ -72,10 +62,9 @@ class blockData {
             }
 
         void generateBlock(); //make new Block data
-        const BlockList& getData() const { return data; } //get current Block data
+        const bool getData(int r, int c, int h) const { return cubic_data[r][c][h]; } //get current Block data
 
         //utility
         void printHeightData();
-        void printVectorData();
         void printStatus();
 };

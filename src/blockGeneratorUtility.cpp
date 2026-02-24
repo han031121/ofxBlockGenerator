@@ -12,11 +12,6 @@ void blockData::printHeightData() {
     }
 }
 
-void blockData::printVectorData() {
-    for(Block b : data)
-        std::cout << "position : " << b.r << " " << b.c << " / height : " << b.height << "\n";
-}
-
 void blockData::printStatus() {
     std::cout << "block_count : " << block_count << "\n";
     std::cout << "size(r, c, h) : " << size_r << " / " << size_c << " / " << size_h << "\n";
