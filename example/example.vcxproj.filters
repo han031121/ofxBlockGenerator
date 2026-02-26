@@ -13,6 +13,9 @@
 		<ClCompile Include="..\src\blockGeneratorUtility.cpp">
 			<Filter>addons\ofxBlockGenerator\src</Filter>
 		</ClCompile>
+		<ClCompile Include="..\src\drawBlock.cpp">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClCompile>
 		<ClCompile Include="..\src\blockGenerator.cpp">
 			<Filter>addons\ofxBlockGenerator\src</Filter>
 		</ClCompile>
@@ -39,6 +42,9 @@
 			<Filter>src</Filter>
 		</ClInclude>
 		<ClInclude Include="..\src\blockGenerator.h">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\src\drawBlock.h">
 			<Filter>addons\ofxBlockGenerator\src</Filter>
 		</ClInclude>
 		<ClInclude Include="..\src\blockGenerator.h">

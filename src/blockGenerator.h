@@ -64,6 +64,9 @@ class blockData {
 
         void generateBlock(); //make new Block data
         const bool getData(int r, int c, int h) const { return cubic_data[r][c][h]; } //get current Block data
+        int getMaxRow() const { return max_r; }
+        int getMaxCol() const { return max_c; }
+        int getMaxHeight() const { return max_h; }
 
         //utility
         void printHeightData();

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "ofMain.h"
 #include "blockGenerator.h"
+#include "drawBlock.h"
 
 class ofApp : public ofBaseApp{
 
@@ -21,5 +24,10 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
+	private:
+		std::unique_ptr<blockData> data;
+		drawBlock blockDrawer;
+		ofEasyCam cam;
 		
 };
