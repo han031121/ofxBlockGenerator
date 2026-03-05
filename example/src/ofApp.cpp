@@ -22,6 +22,8 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 	if (key == 'g') {
 		std::cout << "[ ofApp ] : generate new block data and draw object\n";
+		if (draw_object)
+			delete draw_object;
 
 		block_data->generateBlock();
 		block_data->printHeightData();
