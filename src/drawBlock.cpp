@@ -15,7 +15,6 @@ void drawObject::setup() {
 	light.setDirectional();
 	light.setDiffuseColor(ofFloatColor(1.0));
 	light.setSpecularColor(ofFloatColor(0.3));
-	light.setOrientation(glm::vec3(light_degree_h, 270 + light_degree_xz, 0));
 
 	cam.setFov(cam_fov);
 }
@@ -53,7 +52,6 @@ void drawObject::drawOutline() {
 void drawObject::drawSingleOutline(int r, int c, int h) {
 	int mul_a[4] = { 1, 1, -1, -1 };
 	int mul_b[4] = { 1, -1, 1, -1 };
-	float bias = 0.01;
 	glm::vec3 block_center = { r * block_size, h * block_size, -c * block_size };
 
 	for (int i = 0; i < 4; i++) {
@@ -74,16 +72,13 @@ void drawObject::drawSingleOutline(int r, int c, int h) {
 }
 
 void drawObject::setCamera() {
-	float rad_xz = -degree_xz * std::numbers::pi / 180;
-	float rad_h = degree_h * std::numbers::pi / 180;
-
 	float size_r = data->getSizeRow() * block_size;
 	float size_c = data->getSizeCol() * block_size;
 	float size_h = data->getSizeHeight() * block_size;
 	float block_radius = 0.5f * sqrt(size_r * size_r + size_c * size_c + size_h * size_h);
-	float margin = 1.4;
+	float margin = 1.2;
 
-	float dist = margin * block_radius / std::sin(std::numbers::pi * cam.getFov() / 180 / 2);
+	float dist = margin * block_radius / std::tan(std::numbers::pi * cam.getFov() / 180 / 2);
 	dist = std::max(cam_min_dist, dist);
 
 	cam_center = {
@@ -95,7 +90,10 @@ void drawObject::setCamera() {
 	cam.orbitDeg(90 + degree_xz, -degree_h, dist, cam_center);
 	cam.lookAt(cam_center, {0, 1, 0});
 
-	std::cout << "[ setCamera ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h << "\n";
+	light.setOrientation(glm::vec3(light_degree_h, 270 + light_degree_xz, 0));
+
+	std::cout << "[ setCamera ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
+	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
 	std::cout << "[ setCamera ] : dist = " << dist << "\n";
 	//std::cout << "[ setCamere ] : cam_center = {" << cam_center.x << "," << cam_center.y << "," << cam_center.z << "}\n";
 }

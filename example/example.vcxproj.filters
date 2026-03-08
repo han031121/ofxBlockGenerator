@@ -1,51 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <ClCompile Include="src\ofApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\blockGenerator.cpp">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\blockGeneratorUtility.cpp">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\drawBlock.cpp">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons">
-      <UniqueIdentifier>{2C79CD52--4D8-A-4B-62-B-54E-C2913B52B2A2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxBlockGenerator">
-      <UniqueIdentifier>{355E6F25--A70-3-43-66-8-94C-882973ACBC47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxBlockGenerator\src">
-      <UniqueIdentifier>{B945F658--FFB-F-4D-89-A-D1E-E1D43AF84515}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\blockGenerator.h">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\drawBlock.h">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofxBlockGenerator.h">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="icon.rc" />
-  </ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\src\blockGenerator.cpp">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\src\blockGeneratorUtility.cpp">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\src\drawBlock.cpp">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons">
+			<UniqueIdentifier>{4905D65D--20E-E-4F-E2-9-DAC-69552F92AD61}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxBlockGenerator">
+			<UniqueIdentifier>{3717DCDD--13B-1-4A-2D-8-D1B-1BF9A8135E8A}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxBlockGenerator\src">
+			<UniqueIdentifier>{B1FA6A80--A35-7-46-DC-A-35D-EBD724EA493F}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\src\blockGenerator.h">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\src\drawBlock.h">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\src\ofxBlockGenerator.h">
+			<Filter>addons\ofxBlockGenerator\src</Filter>
+		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
+	</ItemGroup>
 </Project>
