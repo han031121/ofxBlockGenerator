@@ -92,9 +92,9 @@ void drawObject::setCamera() {
 
 	light.setOrientation(glm::vec3(light_degree_h, 270 + light_degree_xz, 0));
 
-	std::cout << "[ setCamera ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
+	std::cout << "[ drawBlock ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
 	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
-	std::cout << "[ setCamera ] : dist = " << dist << "\n";
+	std::cout << "[ drawBlock ] : dist = " << dist << "\n";
 	//std::cout << "[ setCamere ] : cam_center = {" << cam_center.x << "," << cam_center.y << "," << cam_center.z << "}\n";
 }
 

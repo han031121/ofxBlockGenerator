@@ -14,6 +14,8 @@ class ofApp : public ofBaseApp{
 		ofPixels pix;
 		ofImage img;
 
+		bool isRender = false;
+
 		void setup();
 		void update();
 		void draw();

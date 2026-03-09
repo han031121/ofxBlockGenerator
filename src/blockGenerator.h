@@ -59,7 +59,7 @@ class blockData {
                     _max_r < 1 || _max_c < 1 || _max_h < 1)
                     throw std::length_error("invalid max size");
 
-				std::cout << "[ blockData ] : blockData generated.\n";
+				std::cout << "[ blockData ] : BlockData generated.\n";
                 setWeight();
             }
 

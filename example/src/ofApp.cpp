@@ -3,8 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	consoleHelp();
-	std::cout << "[ ofApp ] : generate new block data\n";
-	consoleInput();
 }
 
 //--------------------------------------------------------------
@@ -20,8 +18,14 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == 'g' || key == 'G') {
-		std::cout << "[ ofApp ] : set block data and generate draw object\n";
+	if (key == 'g' || key == 'G')
+	{
+		std::cout << "[ ofApp ] : Set block data and generate draw object\n";
+
+		if (!block_data) {
+			std::cout << "[ ofApp ] : Block data is not allocated. Generate block data (press N).\n";
+			return;
+		}
 
 		int size = std::min(ofGetWidth(), ofGetHeight());
 
@@ -31,51 +35,83 @@ void ofApp::keyPressed(int key){
 		block_data->generateBlock();
 		block_data->printHeightData();
 		draw_object = new drawObject(block_data, size - 2 * MARGIN, size - 2 * MARGIN);
+		isRender = false;
 	}
-	else if (key == 'd' || key == 'D') {
-		std::cout << "[ ofApp ] : modify cam degree\n";
+	else if (key == 'd' || key == 'D')
+	{
+		std::cout << "[ ofApp ] : Modify cam degree\n";
+
+		if (!draw_object) {
+			std::cout << "[ ofApp ] : Draw object is not allocated. Generate Draw object (press G).\n";
+			return;
+		}
 
 		float a, b;
-		std::cout << "cam degree_xz : ";
+		std::cout << "camera degree_xz : ";
 		std::cin >> a;
-		std::cout << "cam degree_h : ";
+		std::cout << "camera degree_h : ";
 		std::cin >> b;
+
 		draw_object->camDegreeUpdate(a, b);
+		isRender = false;
+
+		std::cout << "[ ofApp ] : Modification completed. Render the image again (press R).\n";
 	}
-	else if (key == 'l' || key == 'L') {
-		std::cout << "[ ofApp ] : modify cam degree\n";
+	else if (key == 'l' || key == 'L')
+	{
+		std::cout << "[ ofApp ] : Modify light degree\n";
+
+		if (!draw_object) {
+			std::cout << "[ ofApp ] : Draw object is not allocated. Generate Draw object (press G).\n";
+			return;
+		}
 
 		float a, b;
 		std::cout << "light degree_xz : ";
 		std::cin >> a;
 		std::cout << "light degree_h : ";
 		std::cin >> b;
+
 		draw_object->lightDegreeUpdate(a, b);
+		isRender = false;
+
+		std::cout << "[ ofApp ] : Modification completed. Render the image again (press R).\n";
 	}
-	else if (key == 'r' || key == 'R') {
-		std::cout << "[ ofApp ] : render blocks\n";
+	else if (key == 'r' || key == 'R')
+	{
+		std::cout << "[ ofApp ] : Render blocks\n";
+
+		if (!draw_object) {
+			std::cout << "[ ofApp ] : Draw object is not allocated. Generate Draw object (press G).\n";
+			return;
+		}
 
 		draw_object->render();
 		draw_object->getPixels(pix);
-		//std::cout << "[ ofApp ] : pixel created\n";
-		std::cout << "[ ofApp ] : " << pix.getWidth() << "x" << pix.getHeight()
-				  << " ch=" << pix.getNumChannels()
-				  << " size=" << pix.size() << "\n";
-
 		img.setFromPixels(pix);
-		//std::cout << "[ ofApp ] : image created\n";
+		isRender = true;
+
+		std::cout << "[ ofApp ] : The Image created.\n";
 	}
-	else if (key == 'n' || key == 'N') {
-		cout << "[ ofApp ] : regenerate block data\n";
+	else if (key == 'n' || key == 'N')
+	{
+		cout << "[ ofApp ] : Regenerate block data\n";
 		consoleInput();
 	}
-	else if (key == 's' || key == 'S') {
-		cout << "[ ofApp ] : save image as a file\n";
+	else if (key == 's' || key == 'S')
+	{
+		if (!isRender) {
+			std::cout << "[ ofApp ] : The image is not rendered. Render the image (press R)\n";
+			return;
+		}
+
+		cout << "[ ofApp ] : Save image as a file\n";
 		std::string filename = "image_" + block_data->getIdentify() + ".jpg";
 		draw_object->saveImage(filename);
-		std::cout << "[ ofApp ] : " << filename << " saved\n";
+		std::cout << "[ ofApp ] : " << filename << " saved.\n";
 	}
-	else if (key == '/' || key == '?') {
+	else if (key == '/' || key == '?')
+	{
 		consoleHelp();
 	}
 }
@@ -153,12 +189,17 @@ void ofApp::consoleInput() {
 
 //--------------------------------------------------------------
 void ofApp::consoleHelp() {
-	std::cout << "\n[ HELP ]\n";
-	std::cout << "- G : set block data and generate draw object\n";
-	std::cout << "- R : render blocks\n";
-	std::cout << "- N : regenerate new block data object\n";
-	std::cout << "- D : modify camera degree\n";
-	std::cout << "- L : modify light degree\n";
-	std::cout << "- S : save image as a file\n";
-	std::cout << "- ? : print help\n\n";
+	std::cout << "\n-----------------------[ HELP ]-----------------------\n";
+	std::cout << "- G : Set block data and generate draw object\n";
+	std::cout << "- R : Render blocks\n";
+	std::cout << "- N : Regenerate new block data object\n";
+	std::cout << "- D : Modify camera degree\n";
+	std::cout << "- L : Modify light degree\n";
+	std::cout << "- S : Save image as a file\n";
+	std::cout << "- ? : Print help\n\n";
+	std::cout << "HOW TO USE\n";
+	std::cout << "1. Generate block data object (initial input or press N)\n";
+	std::cout << "2. Set block data and generate draw object (press G)\n";
+	std::cout << "3. Render image (press R)\n";
+	std::cout << "------------------------------------------------------\n\n";
 }
