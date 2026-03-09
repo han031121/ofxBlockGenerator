@@ -77,4 +77,5 @@ class blockData {
         //utility
         void printHeightData();
         void printStatus();
+		std::string getIdentify(); //get identity of current block pattern
 };

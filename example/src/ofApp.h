@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxBlockGenerator.h"
 
+#define MARGIN 20
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -28,4 +30,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void consoleInput();
+		void consoleHelp();
 };
