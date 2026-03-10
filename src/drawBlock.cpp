@@ -17,6 +17,21 @@ void drawObject::setup() {
 	light.setSpecularColor(ofFloatColor(0.3));
 
 	cam.setFov(cam_fov);
+
+	float size_r = data->getSizeRow() * block_size;
+	float size_c = data->getSizeCol() * block_size;
+	float size_h = data->getSizeHeight() * block_size;
+	float block_radius = 0.5f * sqrt(size_r * size_r + size_c * size_c + size_h * size_h);
+	float margin = 1.2;
+
+	cam_dist = margin * block_radius / std::tan(std::numbers::pi * cam.getFov() / 180 / 2);
+	cam_dist = std::max(cam_min_dist, cam_dist);
+
+	cam_center = {
+		(data->getSizeRow() - 1) * block_size * 0.5f,
+		(data->getSizeHeight() - 1) * block_size * 0.5f,
+		-(data->getSizeCol() - 1) * block_size * 0.5f
+	};
 }
 
 void drawObject::drawBlocks() {
@@ -72,45 +87,23 @@ void drawObject::drawSingleOutline(int r, int c, int h) {
 }
 
 void drawObject::setCamera() {
-	float size_r = data->getSizeRow() * block_size;
-	float size_c = data->getSizeCol() * block_size;
-	float size_h = data->getSizeHeight() * block_size;
-	float block_radius = 0.5f * sqrt(size_r * size_r + size_c * size_c + size_h * size_h);
-	float margin = 1.2;
-
-	float dist = margin * block_radius / std::tan(std::numbers::pi * cam.getFov() / 180 / 2);
-	dist = std::max(cam_min_dist, dist);
-
-	cam_center = {
-		(data->getSizeRow() - 1) * block_size * 0.5f,
-		(data->getSizeHeight() - 1) * block_size * 0.5f,
-		-(data->getSizeCol() - 1) * block_size * 0.5f
-	};
-
-	cam.orbitDeg(90 + degree_xz, -degree_h, dist, cam_center);
+	cam.orbitDeg(90 + degree_xz, -degree_h, cam_dist, cam_center);
 	cam.lookAt(cam_center, {0, 1, 0});
 
 	light.setOrientation(glm::vec3(light_degree_h, 270 + light_degree_xz, 0));
-
-	std::cout << "[ drawBlock ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
-	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
-	std::cout << "[ drawBlock ] : dist = " << dist << "\n";
-	//std::cout << "[ setCamere ] : cam_center = {" << cam_center.x << "," << cam_center.y << "," << cam_center.z << "}\n";
 }
 
 void drawObject::render() {
-	if (!data)
+	if (!data || !need_to_refresh)
 		return;
 
 	fbo.begin();
 	ofClear(255, 255, 255, 255);
-
 	setCamera();
+	ofEnableDepthTest();
 
 	ofEnableLighting();
 	light.enable();
-
-	ofEnableDepthTest();
 
 	cam.begin();
 	ofSetColor(draw_color, 255);
@@ -126,12 +119,98 @@ void drawObject::render() {
 	cam.end();
 
 	ofDisableDepthTest();
-
 	fbo.end();
+
+	need_to_refresh = false;
+
+	printImageProperty();
 }
 
 void drawObject::saveImage(std::string filename) {
+	if (need_to_refresh) {
+		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		return;
+	}
 	ofPixels pixels;
 	fbo.readToPixels(pixels);
 	ofSaveImage(pixels, filename);
 };
+
+void drawObject::getPixels(ofPixels & pixels) {
+	if (need_to_refresh) {
+		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		return;
+	}
+	fbo.readToPixels(pixels);
+}
+
+void drawObject::getImage(ofImage & image) {
+	if (need_to_refresh) {
+		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		return;
+	}
+	ofPixels pix;
+	getPixels(pix);
+	image.setFromPixels(pix);
+}
+
+std::string drawObject::getIdentify() {
+	std::string s = "";
+	s += data->getIdentify();
+	s += '_' + std::to_string((int)degree_xz) + std::to_string((int)degree_h);
+	s += '_' + std::to_string((int)light_degree_xz) + std::to_string((int)light_degree_h);
+	return s;
+}
+
+void drawObject::printImageProperty() {
+	std::cout << "[ drawObject ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
+	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
+	std::cout << "[ drawObject ] : cam_dist = " << cam_dist << "\n";
+}
+
+//---------------------------- Update -------------------------------
+void drawObject::camDegreeUpdate(float deg_xz, float deg_h, bool isRelative) {
+	if (isRelative) {
+		degree_xz += deg_xz;
+		degree_h += deg_h;
+	}
+	else {
+		degree_xz = deg_xz;
+		degree_h = deg_h;
+	}
+	need_to_refresh = true;
+}
+
+void drawObject::lightDegreeUpdate(float deg_xz, float deg_h, bool isRelative) {
+	if (isRelative) {
+		light_degree_xz += deg_xz;
+		light_degree_h += deg_h;
+	}
+	else {
+		light_degree_xz = deg_xz;
+		light_degree_h = deg_h;
+	}
+	need_to_refresh = true;
+}
+
+void drawObject::blockColorUpdate(int r, int g, int b, bool isRelative) {
+	if (isRelative) {
+		draw_color = ofColor(r, g, b);
+	}
+	else {
+		glm::vec3 new_color(draw_color.r, draw_color.g, draw_color.b);
+		new_color += glm::vec3(r, g, b);
+		draw_color = ofColor(new_color.x, new_color.y, new_color.z);
+	}
+	need_to_refresh = true;
+}
+
+void drawObject::camDistUpdate(int d, bool isRelative) {
+	if (isRelative) {
+		cam_dist += d;
+	}
+	else {
+		cam_dist = d;
+	}
+	need_to_refresh = true;
+}

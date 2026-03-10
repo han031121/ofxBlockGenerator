@@ -32,6 +32,5 @@ std::string blockData::getIdentify() {
 			s += c;
 		}
 	}
-
 	return s;
 }

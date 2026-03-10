@@ -16,9 +16,12 @@ class drawObject {
 		float light_degree_h;
 		float thickness;
 
-		int cam_fov = 30;
-		float cam_min_dist = 1700;
+		int cam_fov = 20;
+		float cam_min_dist = 2200;
+		float cam_dist = 0;
 		glm::vec3 cam_center;
+
+		bool need_to_refresh = true;
 
 		blockData * data = nullptr;
 
@@ -45,15 +48,18 @@ class drawObject {
 		void render(); //draw and render blocks on fbo
 		void saveImage(std::string filename); //save PNG
 
-		void getPixels(ofPixels & pixels) {
-			fbo.readToPixels(pixels);
-		}
-		void camDegreeUpdate(float deg_xz, float deg_h) {
-			degree_xz = deg_xz;
-			degree_h = deg_h;
-		}
-		void lightDegreeUpdate(float deg_xz, float deg_h) {
-			light_degree_xz = deg_xz;
-			light_degree_h = deg_h;
+		void getPixels(ofPixels & pixels);
+		void getImage(ofImage & image);
+		std::string getIdentify();
+
+		void printImageProperty();
+
+		void camDegreeUpdate(float deg_xz, float deg_h, bool isRelative = false);
+		void lightDegreeUpdate(float deg_xz, float deg_h, bool isRelative = false);
+		void blockColorUpdate(int r, int g, int b, bool isRelative = false);
+		void camDistUpdate(int d, bool isRelative = false);
+
+		void draw(float x, float y) {
+			fbo.draw(x, y);
 		}
 };

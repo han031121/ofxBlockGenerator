@@ -11,11 +11,6 @@ class ofApp : public ofBaseApp{
 		blockData* block_data = nullptr;
 		drawObject* draw_object = nullptr;
 
-		ofPixels pix;
-		ofImage img;
-
-		bool isRender = false;
-
 		void setup();
 		void update();
 		void draw();

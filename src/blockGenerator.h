@@ -7,6 +7,7 @@
 #include <random>
 #include <cmath>
 #include <numbers>
+#include <string>
 
 #define MAX_SIZE 13
 #define EPSILON 1e-12
