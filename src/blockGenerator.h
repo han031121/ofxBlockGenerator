@@ -6,8 +6,10 @@
 #include <queue>
 #include <random>
 #include <cmath>
+#include <numbers>
+#include <string>
 
-#define MAX_SIZE 21
+#define MAX_SIZE 13
 #define EPSILON 1e-12
 #define DEFAULT_WEIGHT 100.0
 #define DENSITY_COEFF 0.02
@@ -31,10 +33,10 @@ class blockData {
         int size_r = 0, size_c = 0, size_h = 0;
         
         //weight
-        double weight_field[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
+        double weight_field[MAX_SIZE][MAX_SIZE][MAX_SIZE+1] = {0};
         
         //data
-        bool cubic_data[MAX_SIZE][MAX_SIZE][MAX_SIZE] = {0};
+        bool cubic_data[MAX_SIZE][MAX_SIZE][MAX_SIZE+1] = {0};
         int height_data[MAX_SIZE][MAX_SIZE] = {0};
 
         //setting weight
@@ -54,17 +56,27 @@ class blockData {
                 
                 if(std::max(_bc1, _bc2) > max_r * max_c * max_h || std::min(_bc1, _bc2) < 1)
                     throw std::length_error("invalid block_count");
-                if (_max_r > MAX_SIZE/2 || _max_c > MAX_SIZE/2 || _max_h > MAX_SIZE-1 ||
+                if (_max_r > MAX_SIZE || _max_c > MAX_SIZE || _max_h > MAX_SIZE ||
                     _max_r < 1 || _max_c < 1 || _max_h < 1)
                     throw std::length_error("invalid max size");
-                
+
+				std::cout << "[ blockData ] : BlockData generated.\n";
                 setWeight();
             }
 
         void generateBlock(); //make new Block data
-        const bool getData(int r, int c, int h) const { return cubic_data[r][c][h]; } //get current Block data
+
+        bool getData(int r, int c, int h) { return cubic_data[r][c][h]; } //get current Block data
+		int getHeightData(int r, int c) { return height_data[r][c]; }
+		int getMaxRow() { return max_r; }
+		int getMaxCol() { return max_c; }
+		int getMaxHeight() { return max_h; }
+		int getSizeRow() { return size_r; }
+		int getSizeCol() { return size_c; }
+		int getSizeHeight() { return size_h; }
 
         //utility
         void printHeightData();
         void printStatus();
+		std::string getIdentify(); //get identity of current block pattern
 };

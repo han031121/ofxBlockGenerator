@@ -1,2 +1,7 @@
-/.vscode
-/build
+.vs/
+build/
+bin/
+obj/
+dll/
+*.exe
+*.pdb
