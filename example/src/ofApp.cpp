@@ -31,7 +31,7 @@ void ofApp::keyPressed(int key){
 			return;
 		}
 
-		int size = std::min(ofGetWidth(), ofGetHeight());
+		int size = std::min(ofGetWidth(), ofGetHeight()) - 2 * MARGIN;
 
 		if (draw_object)
 			delete draw_object;
@@ -194,5 +194,7 @@ void ofApp::consoleHelp() {
 	std::cout << "HOW TO USE\n";
 	std::cout << "1. Generate block data object (press N)\n";
 	std::cout << "2. Set block data and generate draw object (press G)\n";
+	std::cout << "3. You can modify certain properties (press D, L, C)\n";
+	std::cout << "4. Generate new block to press G\n";
 	std::cout << "------------------------------------------------------\n\n";
 }

@@ -27,11 +27,13 @@ void drawObject::setup() {
 	cam_dist = margin * block_radius / std::tan(std::numbers::pi * cam.getFov() / 180 / 2);
 	cam_dist = std::max(cam_min_dist, cam_dist);
 
+	std::tuple<float, float, float> block_center = data->getCenter();
 	cam_center = {
-		(data->getSizeRow() - 1) * block_size * 0.5f,
-		(data->getSizeHeight() - 1) * block_size * 0.5f,
-		-(data->getSizeCol() - 1) * block_size * 0.5f
+		get<0>(block_center) * block_size,
+		get<2>(block_center) * block_size,
+		-get<1>(block_center) * block_size
 	};
+	std::cout << "[ drawBlock ] : cam_center = " << cam_center.x << " " << cam_center.y << " " << cam_center.z << "\n";
 }
 
 void drawObject::drawBlocks() {

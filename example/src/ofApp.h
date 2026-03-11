@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxBlockGenerator.h"
 
-#define MARGIN 20
+#define MARGIN 15
 
 class ofApp : public ofBaseApp{
 

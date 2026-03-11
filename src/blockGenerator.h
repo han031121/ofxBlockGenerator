@@ -79,6 +79,12 @@ class blockData {
 		int getSizeRow() { return size_r; }
 		int getSizeCol() { return size_c; }
 		int getSizeHeight() { return size_h; }
+		std::tuple<float, float, float> getCenter() {
+			return std::make_tuple(
+				(float)(biggest_r + smallest_r) / 2,
+				(float)(biggest_c + smallest_c) / 2,
+				(float)(biggest_h - 1) / 2);
+		}
 
         //utility
         void printHeightData();
