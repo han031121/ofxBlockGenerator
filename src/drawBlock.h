@@ -36,6 +36,7 @@ class drawObject {
 		void drawOutline();
 		void drawSingleOutline(int r, int c, int h);
 
+		void setFbo();
 		void setCamera();
 
 	public:
@@ -59,7 +60,7 @@ class drawObject {
 		void blockColorUpdate(int r, int g, int b, bool isRelative = false);
 		void camDistUpdate(int d, bool isRelative = false);
 
-		void draw(float x, float y) {
-			fbo.draw(x, y);
+		void draw(float x, float y, int w, int h) {
+			fbo.draw(x, y, w, h);
 		}
 };

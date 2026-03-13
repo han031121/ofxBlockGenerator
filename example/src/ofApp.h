@@ -4,6 +4,7 @@
 #include "ofxBlockGenerator.h"
 
 #define MARGIN 20
+#define WINDOW_SIZE 1200
 
 class ofApp : public ofBaseApp{
 

@@ -1,15 +1,7 @@
 #include "drawBlock.h"
 
 void drawObject::setup() {
-	ofFbo::Settings s;
-	s.width = width;
-	s.height = height;
-	s.internalformat = GL_RGBA;
-	s.useDepth = true;
-	s.useStencil = true;
-	s.depthStencilAsTexture = false;
-	s.numSamples = 4;
-	fbo.allocate(s);
+	setFbo();
 
 	light.setup();
 	light.setDirectional();
@@ -27,10 +19,11 @@ void drawObject::setup() {
 	cam_dist = margin * block_radius / std::tan(std::numbers::pi * cam.getFov() / 180 / 2);
 	cam_dist = std::max(cam_min_dist, cam_dist);
 
+	std::tuple<float, float, float> block_center = data->getCenter();
 	cam_center = {
-		(data->getSizeRow() - 1) * block_size * 0.5f,
-		(data->getSizeHeight() - 1) * block_size * 0.5f,
-		-(data->getSizeCol() - 1) * block_size * 0.5f
+		get<0>(block_center) * block_size,
+		get<2>(block_center) * block_size,
+		-get<1>(block_center) * block_size
 	};
 }
 
@@ -86,6 +79,18 @@ void drawObject::drawSingleOutline(int r, int c, int h) {
 	}
 }
 
+void drawObject::setFbo() {
+	ofFbo::Settings s;
+	s.width = width;
+	s.height = height;
+	s.internalformat = GL_RGBA;
+	s.useDepth = true;
+	s.useStencil = true;
+	s.depthStencilAsTexture = false;
+	s.numSamples = 4;
+	fbo.allocate(s);
+}
+
 void drawObject::setCamera() {
 	cam.orbitDeg(90 + degree_xz, -degree_h, cam_dist, cam_center);
 	cam.lookAt(cam_center, {0, 1, 0});
@@ -122,13 +127,11 @@ void drawObject::render() {
 	fbo.end();
 
 	need_to_refresh = false;
-
-	printImageProperty();
 }
 
 void drawObject::saveImage(std::string filename) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	ofPixels pixels;
@@ -138,7 +141,7 @@ void drawObject::saveImage(std::string filename) {
 
 void drawObject::getPixels(ofPixels & pixels) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	fbo.readToPixels(pixels);
@@ -146,7 +149,7 @@ void drawObject::getPixels(ofPixels & pixels) {
 
 void drawObject::getImage(ofImage & image) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	ofPixels pix;
@@ -163,9 +166,10 @@ std::string drawObject::getIdentify() {
 }
 
 void drawObject::printImageProperty() {
-	std::cout << "[ drawObject ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
+	std::cout << "[ drawObject ] degree_xz = " << degree_xz << ", degree_h = " << degree_h;
 	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
-	std::cout << "[ drawObject ] : cam_dist = " << cam_dist << "\n";
+	std::cout << "[ drawObject ] cam_dist = " << cam_dist << "\n";
+	std::cout << "[ drawObject ] cam_center = " << cam_center.x << " " << cam_center.y << " " << cam_center.z << "\n";
 }
 
 //---------------------------- Update -------------------------------
@@ -195,12 +199,12 @@ void drawObject::lightDegreeUpdate(float deg_xz, float deg_h, bool isRelative) {
 
 void drawObject::blockColorUpdate(int r, int g, int b, bool isRelative) {
 	if (isRelative) {
-		draw_color = ofColor(r, g, b);
-	}
-	else {
 		glm::vec3 new_color(draw_color.r, draw_color.g, draw_color.b);
 		new_color += glm::vec3(r, g, b);
 		draw_color = ofColor(new_color.x, new_color.y, new_color.z);
+	}
+	else {
+		draw_color = ofColor(r, g, b);
 	}
 	need_to_refresh = true;
 }
