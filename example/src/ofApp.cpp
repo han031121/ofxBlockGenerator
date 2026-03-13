@@ -25,10 +25,10 @@ void ofApp::keyPressed(int key){
 
 	if (key == 'g' || key == 'G')
 	{
-		std::cout << "\n[ ofApp ] : Set block data and generate draw object\n";
+		std::cout << "\n[ ofApp ] Set block data and generate draw object\n";
 
 		if (!block_data) {
-			std::cout << "[ ofApp ] : Block data is not allocated. Generate block data (press N).\n";
+			std::cout << "[ ofApp ] Block data is not allocated. Generate block data (press N).\n";
 			return;
 		}
 
@@ -45,10 +45,10 @@ void ofApp::keyPressed(int key){
 
 	else if (key == 'd' || key == 'D')
 	{
-		std::cout << "\n[ ofApp ] : Modify cam degree\n";
+		std::cout << "\n[ ofApp ] Modify cam degree\n";
 
 		if (!draw_object) {
-			std::cout << "[ ofApp ] : Draw object is not allocated. Generate Draw object (press G).\n";
+			std::cout << "[ ofApp ] Draw object is not allocated. Generate Draw object (press G).\n";
 			return;
 		}
 
@@ -63,10 +63,10 @@ void ofApp::keyPressed(int key){
 
 	else if (key == 'l' || key == 'L')
 	{
-		std::cout << "\n[ ofApp ] : Modify light degree\n";
+		std::cout << "\n[ ofApp ] Modify light degree\n";
 
 		if (!draw_object) {
-			std::cout << "[ ofApp ] : Draw object is not allocated. Generate Draw object (press G).\n";
+			std::cout << "[ ofApp ] Draw object is not allocated. Generate Draw object (press G).\n";
 			return;
 		}
 
@@ -82,7 +82,7 @@ void ofApp::keyPressed(int key){
 	else if (key == 'c' || key == 'C')
 	{
 		//change color
-		std::cout << "\n[ ofApp ] : Modify block color\n";
+		std::cout << "\n[ ofApp ] Modify block color\n";
 
 		int r, g, b;
 		std::cout << "block color (R G B) : ";
@@ -93,16 +93,16 @@ void ofApp::keyPressed(int key){
 
 	else if (key == 'n' || key == 'N')
 	{
-		std::cout << "\n[ ofApp ] : Generate block data\n";
+		std::cout << "\n[ ofApp ] Generate block data\n";
 		consoleInput();
 	}
 
 	else if (key == 's' || key == 'S')
 	{
-		std::cout << "\n[ ofApp ] : Save image as a file\n";
+		std::cout << "\n[ ofApp ] Save image as a file\n";
 		std::string filename = "image_" + draw_object->getIdentify() + ".jpg";
 		draw_object->saveImage(filename);
-		std::cout << "[ ofApp ] : " << filename << " saved.\n";
+		std::cout << "[ ofApp ] " << filename << " saved.\n";
 	}
 
 	else if (key == '/' || key == '?')
@@ -166,20 +166,26 @@ void ofApp::consoleInput() {
 	if (block_data)
 		delete block_data;
 
-	int i1, i2, i3, i4, i5, i6;
+	int i1, i2, i3, i4, i5;
+	float i6;
+	bool i7;
+
 	std::cout << "block count 1 : ";
 	std::cin >> i1;
 	std::cout << "block count 2 : ";
 	std::cin >> i2;
-	std::cout << "max row : ";
+	std::cout << "max row (1~13) : ";
 	std::cin >> i3;
-	std::cout << "max column : ";
+	std::cout << "max column (1~13) : ";
 	std::cin >> i4;
-	std::cout << "max height : ";
+	std::cout << "max height (1~13) : ";
 	std::cin >> i5;
-	std::cout << "density : ";
+	std::cout << "density (0~100) : ";
 	std::cin >> i6;
-	block_data = new blockData(i1, i2, i3, i4, i5, (double)i6);
+	std::cout << "allow duplicate (0 or 1) : ";
+	std::cin >> i7;
+
+	block_data = new blockData(i1, i2, i3, i4, i5, i6, i7);
 }
 
 //--------------------------------------------------------------
@@ -192,7 +198,7 @@ void ofApp::consoleHelp() {
 	std::cout << "- C : Modify block color\n";
 	std::cout << "- S : Save image as a file\n";
 	std::cout << "- ? : Print help\n\n";
-	std::cout << "HOW TO USE\n";
+	std::cout << "< HOW TO USE >\n";
 	std::cout << "1. Generate block data object (press N)\n";
 	std::cout << "2. Set block data and generate draw object (press G)\n";
 	std::cout << "3. You can modify certain properties (press D, L, C)\n";

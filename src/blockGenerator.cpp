@@ -1,5 +1,4 @@
 #include "blockGenerator.h"
-//TODO : 하나의 blockData에 대해 중복 생성 방지
 
 //generateBlock
 std::random_device rd;
@@ -8,20 +7,32 @@ std::mt19937 mt(rd());
 void blockData::generateBlock() {
 	int count = 0;
 
-	while (count++ <= FAIL_COUNT) {
-		init();
-		makeBlock();
+	if (!allow_duplicate) {
+		while (count++ <= std::max(FAIL_COUNT, (int)created_list.size())) {
+			init();
+			makeBlock();
 
-		std::string key = getIdentify();
+			std::string key = getIdentify();
 
-		if (created_list.find(key) == created_list.end()) {
-			created_list.insert(key);
-			break;
+			if (created_list.find(key) == created_list.end()) {
+				created_list.insert(key);
+				break;
+			}
 		}
 	}
+	else {
+		init();
+		makeBlock();
+	}
+
+	if (count > 1)
+		std::cout << "[ blockData ] duplication : " << count << "\n";
+	//std::cout << "[ blockData ] start_point = " << start_point.first << " " << start_point.second << "\n";
 
 	if (count > FAIL_COUNT) {
-
+		init();
+		is_generated = false;
+		std::cout << "[ blockData ] No more unique block configurations can be generated. Please generate new block data object (press N)\n";
 	}
 }
 
@@ -71,7 +82,6 @@ void blockData::makeBlock() {
         }
 
         for(Tuple t : adj) {
-            //std::cout << "adj : " << get<0>(t) << " " << get<1>(t) << " " << get<2>(t) << "\n";
             weight_sum += getWeight(get<0>(t), get<1>(t), get<2>(t));
             weight_list.push_back({t, weight_sum});
         }
@@ -80,7 +90,7 @@ void blockData::makeBlock() {
         double cur_weight = dis_weight(mt);
 
         if(weight_list.empty() || weight_sum <= EPSILON) {
-            std::cout << "generateBlock - Cannot generate block anymore" << "\n";
+            std::cout << "[ blockData ] Cannot generate block anymore" << "\n";
             break;
         }
 
@@ -97,12 +107,11 @@ void blockData::makeBlock() {
             cubic_data[get<0>(cur)][get<1>(cur)][get<2>(cur)] = 1;
             height_data[get<0>(cur)][get<1>(cur)] = std::max(height_data[get<0>(cur)][get<1>(cur)], get<2>(cur));
             measureSize(cur);
-            //std::cout << "generateBlock - selected : " << get<0>(cur) << " " << get<1>(cur) << " " << get<2>(cur) << "\n";
             break;
         }
     }
 
-	isGenerated = true;
+	is_generated = true;
 }
 
 void blockData::setStartPoint() {
@@ -127,8 +136,6 @@ void blockData::setStartPoint() {
 		start_point = p.first;
 		break;
 	}
-
-	std::cout << "[ blockData ] : start_point = " << start_point.first << " " << start_point.second << "\n";
 }
 
 //setWeight

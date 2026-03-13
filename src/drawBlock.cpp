@@ -25,7 +25,6 @@ void drawObject::setup() {
 		get<2>(block_center) * block_size,
 		-get<1>(block_center) * block_size
 	};
-	std::cout << "[ drawObject ] : cam_center = " << cam_center.x << " " << cam_center.y << " " << cam_center.z << "\n";
 }
 
 void drawObject::drawBlocks() {
@@ -128,13 +127,11 @@ void drawObject::render() {
 	fbo.end();
 
 	need_to_refresh = false;
-
-	printImageProperty();
 }
 
 void drawObject::saveImage(std::string filename) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	ofPixels pixels;
@@ -144,7 +141,7 @@ void drawObject::saveImage(std::string filename) {
 
 void drawObject::getPixels(ofPixels & pixels) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	fbo.readToPixels(pixels);
@@ -152,7 +149,7 @@ void drawObject::getPixels(ofPixels & pixels) {
 
 void drawObject::getImage(ofImage & image) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] : Need to refresh the image.\n";
+		std::cout << "[ drawObject ] Need to refresh the image.\n";
 		return;
 	}
 	ofPixels pix;
@@ -169,9 +166,10 @@ std::string drawObject::getIdentify() {
 }
 
 void drawObject::printImageProperty() {
-	std::cout << "[ drawObject ] : degree_xz = " << degree_xz << ", degree_h = " << degree_h;
+	std::cout << "[ drawObject ] degree_xz = " << degree_xz << ", degree_h = " << degree_h;
 	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
-	std::cout << "[ drawObject ] : cam_dist = " << cam_dist << "\n";
+	std::cout << "[ drawObject ] cam_dist = " << cam_dist << "\n";
+	std::cout << "[ drawObject ] cam_center = " << cam_center.x << " " << cam_center.y << " " << cam_center.z << "\n";
 }
 
 //---------------------------- Update -------------------------------

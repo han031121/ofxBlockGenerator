@@ -14,7 +14,7 @@
 #define EPSILON 1e-12
 #define DEFAULT_WEIGHT 100.0
 #define DENSITY_COEFF 0.02
-#define FAIL_COUNT 1000
+#define FAIL_COUNT 3000
 
 typedef std::tuple<int,int,int> Tuple;
 typedef std::pair<int, int> Pair;
@@ -30,13 +30,14 @@ class blockData {
         int max_r, max_c, max_h; //max : MAX_SIZE
         double density_var = 0;
 		Pair start_point;
+		bool allow_duplicate;
 
         //status
         int biggest_r = 0, biggest_c = 0, biggest_h = 0;
         int smallest_r = MAX_SIZE, smallest_c = MAX_SIZE;
         int size_r = 0, size_c = 0, size_h = 0;
 		std::unordered_set<std::string> created_list;
-		bool isGenerated = false;
+		bool is_generated = false;
         
         //weight
         double weight_field[MAX_SIZE][MAX_SIZE][MAX_SIZE+1] = {0};
@@ -60,8 +61,8 @@ class blockData {
         void measureSize(Tuple t); //measure current size
 
     public:
-        blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h, double _den)
-            : max_r(_max_r), max_c(_max_c), max_h(_max_h), density_var(_den) {
+        blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h, double _den, bool _dup)
+            : max_r(_max_r), max_c(_max_c), max_h(_max_h), density_var(_den), allow_duplicate(_dup) {
                 block_count_pair = {std::min(_bc1, _bc2), std::max(_bc1, _bc2)};
                 
                 if(std::max(_bc1, _bc2) > max_r * max_c * max_h || std::min(_bc1, _bc2) < 1)
@@ -90,6 +91,7 @@ class blockData {
 				(float)(biggest_c + smallest_c) / 2,
 				(float)(biggest_h - 1) / 2);
 		}
+		bool isGenerated() { return is_generated; }
 
         //utility
         void printHeightData();
