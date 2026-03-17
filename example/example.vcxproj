@@ -233,6 +233,7 @@
     <ClCompile Include="..\src\drawObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\statusManager.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\src\blockData.h" />
     <ClInclude Include="..\src\drawObject.h" />

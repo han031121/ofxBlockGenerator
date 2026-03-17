@@ -44,6 +44,9 @@
     <ClInclude Include="..\src\ofxBlockGenerator.h">
       <Filter>addons\ofxBlockGenerator\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\statusManager.h">
+      <Filter>addons\ofxBlockGenerator\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "blockData.h"
+#include "statusManager.h"
 #include "ofMain.h"
 
 class drawObject {
@@ -40,6 +41,8 @@ private:
 	void setCamera();
 
 public:
+	statusManager status;
+
 	drawObject(blockData* _d, int _w, int _h, int _dxz = 25, int _dh = 20, int _ldxz = 25, int _ldh = 38, int _t = 2)
 		: data(_d), width(_w), height(_h),
 		degree_xz(_dxz), degree_h(_dh), light_degree_xz(_ldxz), light_degree_h(_ldh), thickness(_t) {

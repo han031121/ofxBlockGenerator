@@ -63,6 +63,8 @@ private:
     void measureSize(Tuple t); //measure current size
 
 public:
+	statusManager status;
+
     blockData(int _bc1, int _bc2, int _max_r, int _max_c, int _max_h, double _den, bool _dup)
         : max_r(_max_r), max_c(_max_c), max_h(_max_h), density_var(_den), allow_duplicate(_dup) {
             block_count_pair = {std::min(_bc1, _bc2), std::max(_bc1, _bc2)};
@@ -93,6 +95,7 @@ public:
 			(float)(biggest_c + smallest_c) / 2,
 			(float)(biggest_h - 1) / 2);
 	}
+
 	bool isGenerated() { return is_generated; }
 
     //utility
