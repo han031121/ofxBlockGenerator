@@ -1,4 +1,4 @@
-#include "drawBlock.h"
+#include "drawObject.h"
 
 void drawObject::setup() {
 	setFbo();

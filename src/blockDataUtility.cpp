@@ -1,4 +1,4 @@
-#include "blockGenerator.h"
+#include "blockData.h"
 
 void blockData::printHeightData() {
     for(int i = 0; i < max_r; i++) {
