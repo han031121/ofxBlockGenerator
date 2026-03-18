@@ -236,3 +236,20 @@ void blockData::measureSize(Tuple added) {
     size_c = biggest_c - smallest_c + 1;
     size_h = biggest_h;
 }
+
+std::string blockData::getIdentify() {
+	std::string s = "";
+	char hex[] = "0123456789ABCDEF";
+
+	s += hex[size_r];
+	s += hex[size_c];
+	s += '_';
+
+	for (int i = smallest_r; i <= biggest_r; i++) {
+		for (int j = smallest_c; j <= biggest_c; j++) {
+			char c = hex[height_data[i][j]];
+			s += c;
+		}
+	}
+	return s;
+}

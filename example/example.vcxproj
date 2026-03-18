@@ -229,7 +229,6 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\src\blockData.cpp" />
-    <ClCompile Include="..\src\blockDataUtility.cpp" />
     <ClCompile Include="..\src\drawObject.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -63,6 +63,13 @@ public:
 	void blockColorUpdate(int r, int g, int b, bool isRelative = false);
 	void camDistUpdate(int d, bool isRelative = false);
 
+	float getCamDegreeXZ() { return degree_xz; }
+	float getCamDegreeH() { return degree_h; }
+	float getLightDegreeXZ() { return light_degree_xz; }
+	float getLightDegreeH() { return light_degree_h; }
+	glm::vec3 getblockColor() { return { draw_color.r, draw_color.g, draw_color.b }; }
+	float getCamDist() { return cam_dist; }
+
 	void draw(float x, float y, int w, int h) {
 		fbo.draw(x, y, w, h);
 	}

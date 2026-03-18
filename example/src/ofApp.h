@@ -27,7 +27,10 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
 		void consoleInput();
 		void consoleHelp();
 		void printStatus();
+		void printBlockDataInfo();
+		void printDrawObjectInfo();
 };

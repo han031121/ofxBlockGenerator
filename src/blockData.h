@@ -102,11 +102,9 @@ public:
 			(float)(biggest_c + smallest_c) / 2,
 			(float)(biggest_h - 1) / 2);
 	}
-
+	int getBlockCount() { return block_count; }
 	bool isGenerated() { return is_generated; }
 
     //utility
-    void printHeightData();
-    void printStatus();
 	std::string getIdentify(); //get identity of current block pattern
 };

@@ -10,9 +10,6 @@
     <ClCompile Include="..\src\blockData.cpp">
       <Filter>addons\ofxBlockGenerator\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\blockDataUtility.cpp">
-      <Filter>addons\ofxBlockGenerator\src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\drawObject.cpp">
       <Filter>addons\ofxBlockGenerator\src</Filter>
     </ClCompile>
