@@ -10,6 +10,7 @@ void ofApp::update(){
 	if (draw_object) {
 		draw_object->render();
 	}
+	printStatus();
 }
 
 //--------------------------------------------------------------
@@ -38,8 +39,8 @@ void ofApp::keyPressed(int key){
 			delete draw_object;
 
 		block_data->generateBlock();
-		block_data->printHeightData();
-		block_data->printStatus();
+		printBlockDataInfo();
+		printDrawObjectInfo();
 		draw_object = new drawObject(block_data, size, size);
 	}
 
@@ -204,4 +205,51 @@ void ofApp::consoleHelp() {
 	std::cout << "3. You can modify certain properties (press D, L, C)\n";
 	std::cout << "4. Generate new block to press G\n";
 	std::cout << "------------------------------------------------------\n";
+}
+
+void ofApp::printStatus() {
+	std::string level[3] = { "[ Info ] ", "[ Warning ] ", "[ Error ] " };
+
+	if (block_data && block_data->status.isUpdated()) {
+		std::string msg = "";
+		statusMessage s = block_data->status.getStatus();
+		msg += level[(int)s.level] + s.msg + "\n";
+		std::cout << msg;
+	}
+	if (draw_object && draw_object->status.isUpdated()) {
+		std::string msg = "";
+		statusMessage s = draw_object->status.getStatus();
+		msg += level[(int)s.level] + s.msg + "\n";
+		std::cout << msg;
+	}
+}
+
+void ofApp::printBlockDataInfo() {
+	if (!block_data)
+		return;
+
+	int max_r = block_data->getMaxRow();
+	int max_c = block_data->getMaxCol();
+
+	for (int i = 0; i < max_r; i++) {
+		std::cout << "\t";
+		for (int j = 0; j < max_c; j++) {
+			if (block_data->getHeightData(i, j) == 0)
+				std::cout << "." << " ";
+			else
+				std::cout << block_data->getHeightData(i, j) << " ";
+		}
+		std::cout << "\n";
+	}
+	std::cout << "\tblock_count : " << block_data->getBlockCount() << "\n";
+	std::cout << "\tsize(r, c, h) : " << block_data->getSizeRow() << " / " << block_data->getSizeCol() << " / " << block_data->getSizeHeight() << "\n";
+}
+
+void ofApp::printDrawObjectInfo() {
+	if (!draw_object)
+		return;
+
+	std::cout << "\tdegree_xz = " << draw_object->getCamDegreeXZ() << ", degree_h = " << draw_object->getCamDegreeH() << "\n";
+	std::cout << "\tlight_degree_xz = " << draw_object->getLightDegreeXZ() << ", light_degree_h = " << draw_object->getLightDegreeH() << "\n";
+	std::cout << "\tcam_dist = " << draw_object->getCamDist() << "\n";
 }

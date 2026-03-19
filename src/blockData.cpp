@@ -1,4 +1,4 @@
-#include "blockGenerator.h"
+#include "blockData.h"
 
 //generateBlock
 std::random_device rd;
@@ -25,14 +25,13 @@ void blockData::generateBlock() {
 		makeBlock();
 	}
 
-	if (count > 1)
-		std::cout << "[ blockData ] duplication : " << count << "\n";
-	//std::cout << "[ blockData ] start_point = " << start_point.first << " " << start_point.second << "\n";
-
 	if (count > FAIL_COUNT) {
 		init();
 		is_generated = false;
-		std::cout << "[ blockData ] No more unique block configurations can be generated. Please generate new block data object (press N)\n";
+		status.setStatus(statusLevel::Error, "[ blockData ] No more unique block configurations can be generated. Please generate new block data object.");
+	}
+	else if (count > 1) {
+		status.setStatus(statusLevel::Info, "[ blockData ] duplication : " + std::to_string(count));
 	}
 }
 
@@ -90,7 +89,7 @@ void blockData::makeBlock() {
         double cur_weight = dis_weight(mt);
 
         if(weight_list.empty() || weight_sum <= EPSILON) {
-            std::cout << "[ blockData ] Cannot generate block anymore" << "\n";
+			status.setStatus(statusLevel::Warning, "[ blockData ] Cannot generate block anymore.");
             break;
         }
 
@@ -112,6 +111,7 @@ void blockData::makeBlock() {
     }
 
 	is_generated = true;
+	status.setStatus(statusLevel::Info, "[ blockData ] Block generated.");
 }
 
 void blockData::setStartPoint() {
@@ -158,7 +158,6 @@ bool blockData::checkCreatable(int r, int c, int h) {
 
 bool blockData::checkObscure(int r, int c, int h) {
     int check_r, check_c, check_h;
-    //std::cout << "checkObscure - (r,c,h) = " << "(" << r << ", " << c << ", " << h << ") ";
 
     if(r-1 >= 0 && c+1 < max_c) {
         check_r = r-1;
@@ -191,7 +190,6 @@ bool blockData::checkObscure(int r, int c, int h) {
 double blockData::getWeight(int r, int c, int h) {
     if(!checkCreatable(r,c,h))
         return 0;
-    //std::cout << "DEBUG - calc weight : " << r << " " << c << " " << h <<"\n";
     double mul = 1.0;
     double possibility = weight_field[r][c][h];
 
@@ -237,4 +235,21 @@ void blockData::measureSize(Tuple added) {
     size_r = biggest_r - smallest_r + 1;
     size_c = biggest_c - smallest_c + 1;
     size_h = biggest_h;
+}
+
+std::string blockData::getIdentify() {
+	std::string s = "";
+	char hex[] = "0123456789ABCDEF";
+
+	s += hex[size_r];
+	s += hex[size_c];
+	s += '_';
+
+	for (int i = smallest_r; i <= biggest_r; i++) {
+		for (int j = smallest_c; j <= biggest_c; j++) {
+			char c = hex[height_data[i][j]];
+			s += c;
+		}
+	}
+	return s;
 }

@@ -1,4 +1,4 @@
-#include "drawBlock.h"
+#include "drawObject.h"
 
 void drawObject::setup() {
 	setFbo();
@@ -131,7 +131,7 @@ void drawObject::render() {
 
 void drawObject::saveImage(std::string filename) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] Need to refresh the image.\n";
+		status.setStatus(statusLevel::Error, "[ drawObject ] Need to refresh the image.");
 		return;
 	}
 	ofPixels pixels;
@@ -141,7 +141,7 @@ void drawObject::saveImage(std::string filename) {
 
 void drawObject::getPixels(ofPixels & pixels) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] Need to refresh the image.\n";
+		status.setStatus(statusLevel::Error, "[ drawObject ] Need to refresh the image.");
 		return;
 	}
 	fbo.readToPixels(pixels);
@@ -149,7 +149,7 @@ void drawObject::getPixels(ofPixels & pixels) {
 
 void drawObject::getImage(ofImage & image) {
 	if (need_to_refresh) {
-		std::cout << "[ drawObject ] Need to refresh the image.\n";
+		status.setStatus(statusLevel::Error, "[ drawObject ] Need to refresh the image.");
 		return;
 	}
 	ofPixels pix;

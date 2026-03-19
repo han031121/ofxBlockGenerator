@@ -1,4 +1,4 @@
 #pragma once
 
-#include "blockGenerator.h"
-#include "drawBlock.h"
+#include "blockData.h"
+#include "drawObject.h"
