@@ -36,12 +36,12 @@ void ofApp::keyPressed(int key){
 		int size = std::min(ofGetWidth(), ofGetHeight()) - 2 * MARGIN;
 
 		if (draw_object)
-			delete draw_object;
+			draw_object.reset();
 
 		block_data->generateBlock();
+		draw_object = std::make_unique<drawObject>(block_data.get(), size, size);
 		printBlockDataInfo();
 		printDrawObjectInfo();
-		draw_object = new drawObject(block_data, size, size);
 	}
 
 	else if (key == 'd' || key == 'D')
@@ -164,8 +164,10 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::consoleInput() {
-	if (block_data)
-		delete block_data;
+	if (block_data) {
+		draw_object.reset();
+		block_data.reset();
+	}
 
 	int i1, i2, i3, i4, i5;
 	float i6;
@@ -186,7 +188,7 @@ void ofApp::consoleInput() {
 	std::cout << "allow duplicate (0 or 1) : ";
 	std::cin >> i7;
 
-	block_data = new blockData(i1, i2, i3, i4, i5, i6, i7);
+	block_data = std::make_unique<blockData>(i1, i2, i3, i4, i5, i6, i7);
 }
 
 //--------------------------------------------------------------
