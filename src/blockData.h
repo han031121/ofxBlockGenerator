@@ -88,22 +88,22 @@ public:
 
     void generateBlock(); //make new Block data
 
-    bool getData(int r, int c, int h) { return cubic_data[r][c][h]; } //get current Block data
-	int getHeightData(int r, int c) { return height_data[r][c]; }
-	int getMaxRow() { return max_r; }
-	int getMaxCol() { return max_c; }
-	int getMaxHeight() { return max_h; }
-	int getSizeRow() { return size_r; }
-	int getSizeCol() { return size_c; }
-	int getSizeHeight() { return size_h; }
-	std::tuple<float, float, float> getCenter() {
+    bool getData(int r, int c, int h) const { return cubic_data[r][c][h]; }
+	int getHeightData(int r, int c) const { return height_data[r][c]; }
+	int getMaxRow() const { return max_r; }
+	int getMaxCol() const { return max_c; }
+	int getMaxHeight() const { return max_h; }
+	int getSizeRow() const { return size_r; }
+	int getSizeCol() const { return size_c; }
+	int getSizeHeight() const { return size_h; }
+	std::tuple<float, float, float> const getCenter() {
 		return std::make_tuple(
 			(float)(biggest_r + smallest_r) / 2,
 			(float)(biggest_c + smallest_c) / 2,
 			(float)(biggest_h - 1) / 2);
 	}
-	int getBlockCount() { return block_count; }
-	bool isGenerated() { return is_generated; }
+	int getBlockCount() const { return block_count; }
+	bool isGenerated() const { return is_generated; }
 
     //utility
 	std::string getIdentify(); //get identity of current block pattern

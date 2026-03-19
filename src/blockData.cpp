@@ -193,9 +193,6 @@ double blockData::getWeight(int r, int c, int h) {
     double mul = 1.0;
     double possibility = weight_field[r][c][h];
 
-    if(!checkCreatable(r,c,h))
-        return 0.0;
-
     possibility *= mul;
     return possibility;
 }
@@ -212,7 +209,7 @@ void blockData::setWeight() {
 
 //setStatus
 void blockData::init() {
-    std::fill(&cubic_data[0][0][0], &cubic_data[0][0][0] + MAX_SIZE*MAX_SIZE*MAX_SIZE, 0);
+    std::fill(&cubic_data[0][0][0], &cubic_data[0][0][0] + MAX_SIZE*MAX_SIZE*(MAX_SIZE + 1), 0);
     std::fill(&height_data[0][0], &height_data[0][0] + MAX_SIZE*MAX_SIZE, 0);
 
     biggest_r = 0;
