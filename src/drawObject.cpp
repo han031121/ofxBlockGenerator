@@ -158,18 +158,20 @@ void drawObject::getImage(ofImage & image) {
 }
 
 std::string drawObject::getIdentify() {
+	char hex[] = "0123456789ABCDEF";
 	std::string s = "";
+	std::stringstream ss;
+
 	s += data->getIdentify();
 	s += '_' + std::to_string((int)degree_xz) + std::to_string((int)degree_h);
 	s += '_' + std::to_string((int)light_degree_xz) + std::to_string((int)light_degree_h);
+	ss << '_'
+	   << std::uppercase << std::hex
+	   << std::setw(2) << std::setfill('0') << (int)draw_color.r
+	   << std::setw(2) << std::setfill('0') << (int)draw_color.g
+	   << std::setw(2) << std::setfill('0') << (int)draw_color.b;
+	s += ss.str();
 	return s;
-}
-
-void drawObject::printImageProperty() {
-	std::cout << "[ drawObject ] degree_xz = " << degree_xz << ", degree_h = " << degree_h;
-	std::cout << ", light_degree_xz = " << light_degree_xz << ", light_degree_h = " << light_degree_h << "\n";
-	std::cout << "[ drawObject ] cam_dist = " << cam_dist << "\n";
-	std::cout << "[ drawObject ] cam_center = " << cam_center.x << " " << cam_center.y << " " << cam_center.z << "\n";
 }
 
 //---------------------------- Update -------------------------------

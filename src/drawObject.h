@@ -56,8 +56,6 @@ public:
 	void getImage(ofImage & image);
 	std::string getIdentify();
 
-	void printImageProperty();
-
 	void camDegreeUpdate(float deg_xz, float deg_h, bool isRelative = false);
 	void lightDegreeUpdate(float deg_xz, float deg_h, bool isRelative = false);
 	void blockColorUpdate(int r, int g, int b, bool isRelative = false);
