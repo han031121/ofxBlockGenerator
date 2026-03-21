@@ -68,7 +68,7 @@ public:
 	glm::vec3 getblockColor() const { return { draw_color.r, draw_color.g, draw_color.b }; }
 	float getCamDist() const { return cam_dist; }
 
-	void draw(float x, float y, int w, int h) {
+	void drawFbo(float x, float y, int w, int h) {
 		fbo.draw(x, y, w, h);
 	}
 };
