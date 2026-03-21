@@ -1,5 +1,22 @@
 #include "ofApp.h"
 
+void ofApp::consoleHelp() {
+	std::cout << "\n-----------------------[ HELP ]-----------------------\n";
+	std::cout << "- G : Set block data and generate draw object\n";
+	std::cout << "- N : Generate new block data object\n";
+	std::cout << "- D : Modify camera degree\n";
+	std::cout << "- L : Modify light degree\n";
+	std::cout << "- C : Modify block color\n";
+	std::cout << "- S : Save image as a file\n";
+	std::cout << "- ? : Print help\n\n";
+	std::cout << "< HOW TO USE >\n";
+	std::cout << "1. Generate block data object (press N)\n";
+	std::cout << "2. Set block data and generate draw object (press G)\n";
+	std::cout << "3. You can modify certain properties (press D, L, C)\n";
+	std::cout << "4. Set new block to press G\n";
+	std::cout << "------------------------------------------------------\n";
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	consoleHelp();
@@ -17,7 +34,7 @@ void ofApp::update(){
 void ofApp::draw() {
 	if (draw_object) {
 		int size = std::min(ofGetWidth(), ofGetHeight()) - 2 * MARGIN;
-		draw_object->draw(MARGIN, MARGIN, size, size);
+		draw_object->drawFbo(MARGIN, MARGIN, size, size);
 	}
 }
 
@@ -192,22 +209,6 @@ void ofApp::consoleInput() {
 }
 
 //--------------------------------------------------------------
-void ofApp::consoleHelp() {
-	std::cout << "\n-----------------------[ HELP ]-----------------------\n";
-	std::cout << "- G : Set block data and generate draw object\n";
-	std::cout << "- N : Generate new block data object\n";
-	std::cout << "- D : Modify camera degree\n";
-	std::cout << "- L : Modify light degree\n";
-	std::cout << "- C : Modify block color\n";
-	std::cout << "- S : Save image as a file\n";
-	std::cout << "- ? : Print help\n\n";
-	std::cout << "< HOW TO USE >\n";
-	std::cout << "1. Generate block data object (press N)\n";
-	std::cout << "2. Set block data and generate draw object (press G)\n";
-	std::cout << "3. You can modify certain properties (press D, L, C)\n";
-	std::cout << "4. Generate new block to press G\n";
-	std::cout << "------------------------------------------------------\n";
-}
 
 void ofApp::printStatus() {
 	std::string level[3] = { "[ Info ] ", "[ Warning ] ", "[ Error ] " };
